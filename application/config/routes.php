@@ -9,8 +9,6 @@ $route['login']          = 'login';
 $route['reset-password'] = 'login/reset_password';
 $route['cek-login']      = 'login/ceklogin';
 
-// Menu Level Admin
-
 // Menu Admin
 $route['admin'] = 'admin';
 $route['simpan-registrasi'] = 'Absen_Kehadiran/simpanRegistrasi';
@@ -108,6 +106,9 @@ $route['form_ubah_faq/(:any)'] = 'FAQ/edit_faq/$1';
 $route['Informasi']= 'Informasi';
 $route['form_tambah_informasi']      = 'Informasi/form_tambah_informasi';
 $route['form_ubah_informasi/(:any)'] = 'Informasi/edit_informasi/$1';
+
+// Menu Info Grafik
+$route['grafik']      = 'Grafik';
 
 // Notfound
 $route['404_override'] = '';

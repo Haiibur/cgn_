@@ -332,7 +332,8 @@
     <!-- End Informasi -->
 
     <!-- Peserta -->
-   <!--  <div class="col-12 col-sm-6 col-xl-4 mt-3">
+
+    <!--  <div class="col-12 col-sm-6 col-xl-4 mt-3">
         <a href="<?= base_url(); ?>Undangan" style="text-decoration: none">
             <div class="card">
                 <div class="card-body">
@@ -344,6 +345,7 @@
             </div>
         </a>
     </div> -->
+
     <div class="col-12 col-sm-6 col-xl-4 mt-3">
         <a href="<?= base_url(); ?>Pendaftaran" style="text-decoration: none">
             <div class="card">
@@ -517,6 +519,21 @@
         </a>
     </div>
     <!-- End Peserta -->
+
+    <!-- Info Grafik -->
+    <div class="col-12 col-sm-6 col-xl-4 mt-3">
+        <a href="<?= base_url(); ?>grafik" style="text-decoration: none">
+            <div class="card">
+                <div class="card-body">
+                    <img src="<?=base_url('assets/img/icon/Projections-amico.png');?>" alt="" class="float-right"
+                        width="60" />
+                    <h6 class="card-title font-weight-bold">Info Grafik</h6>
+                    <h6 class="card-subtitle mb-2 text-muted text-danger">Data Grafik</h6>
+                    <h2></h2>
+                </div>
+            </div>
+        </a>
+    </div>
 
     <?php }elseif ($userdata->nama_level=="Pariwisata") {?>
     <!-- Hotel -->

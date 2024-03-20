@@ -223,8 +223,6 @@
     INNER JOIN t_prov_kab ON t_prov_kab.kd_kab= t_pendaftaran.kab_kd 
     INNER JOIN t_peserta_level ON t_peserta_level.kd_level_peserta=t_pendaftaran.level_peserta WHERE status_peserta='3' ORDER BY jam_verifikasi DESC";
     return $this->db->query($query);
-
-   
   }
 
   public function getMax($table = null, $field = null)
@@ -232,5 +230,24 @@
 		$this->db->select_max($field);
 		return $this->db->get($table)->row_array()[$field];
 	}
+
+  function Grafik1()
+  {
+    $query = "SELECT kd_daftar, status_peserta, COUNT(status_peserta) jmlhdata
+    FROM t_pendaftaran tpn
+    GROUP BY status_peserta";
+    return $this->db->query($query);
+  }
+
+  function Grafik_list()
+  {
+    $query = "SELECT t_pendaftaran.kd_daftar,t_pendaftaran.tgl_konfirmasi_hadir, t_peserta_level.*, t_pendaftaran.status_peserta, COUNT(t_pendaftaran.status_peserta) jmlhdata 
+    FROM t_pendaftaran 
+    INNER JOIN t_provinsi ON t_provinsi.kd_provinsi= t_pendaftaran.prov_kd 
+    INNER JOIN t_prov_kab ON t_prov_kab.kd_kab= t_pendaftaran.kab_kd 
+    INNER JOIN t_peserta_level ON t_peserta_level.kd_level_peserta=t_pendaftaran.level_peserta
+    GROUP BY t_peserta_level.nama_level_peserta, t_pendaftaran.status_peserta";
+    return $this->db->query($query);
+  }
 } 
 ?>

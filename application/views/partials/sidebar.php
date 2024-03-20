@@ -19,8 +19,7 @@
         <i class="icon-close"></i>
     </a>
     <a href="<?= base_url('Home'); ?>" class="sidebar-logo d-flex">
-        <img src="<?= base_url('assets/img/logocss2.png'); ?>" alt="Css" width="100"
-            class="img-fluid mr-2" />
+        <img src="<?= base_url('assets/img/logocss2.png'); ?>" alt="Css" width="100" class="img-fluid mr-2" />
 
     </a>
     <ul id="side-menu" class="sidebar-menu">
@@ -280,7 +279,7 @@
                     <li>
                         <a href="<?= base_url('Absen_Kehadiran'); ?>">
                             <i class="fas fa-grip-horizontal"></i>
-                             Registrasi Peserta
+                            Registrasi Peserta
                         </a>
                     </li>
                 </ul>
@@ -369,7 +368,7 @@
             </a>
             <div>
                 <ul>
-                   <!--  <li>
+                    <!--  <li>
                         <a href="<?= base_url('Undangan'); ?>">
                             <i class="fas fa-grip-horizontal"></i>
                             Undangan
@@ -384,13 +383,22 @@
                     <li>
                         <a href="<?= base_url('Absen_Kehadiran'); ?>">
                             <i class="fas fa-grip-horizontal"></i>
-                             Registrasi Peserta
+                            Registrasi Peserta
                         </a>
                     </li>
                 </ul>
             </div>
         </li>
         <!-- End Peserta -->
+
+        <!-- Grafik -->
+        <li>
+            <a href="<?= base_url('grafik'); ?>">
+                <i class="icon-chart"></i>
+                Info Grafik
+            </a>
+        </li>
+        <!-- End Grafik -->
 
         <?php }elseif ($userdata->nama_level=="Pariwisata") {?>
         <!-- Hotel -->
