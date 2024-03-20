@@ -1,0 +1,35 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+# X-XSS-Protection
+<IfModule mod_headers.c>
+  Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+# X-Frame-Options
+<IfModule mod_headers.c>
+  Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+<IfModule mod_headers.c>
+Header add Cache-Control:  "no-store, no-cache, must-revalidate"
+</IfModule>
+<FilesMatch "\.(css|png)$">
+    Header set X-Content-Type-Options nosniff
+</FilesMatch>
+<Files "composer.json">
+Order Allow,Deny
+Deny from all
+</files>
+<Files ".gitignore">
+Order Allow,Deny
+Deny from all
+</files>
+<Files "assets">
+Order Allow,Deny
+Deny from all
+</files>
+php_flag display_startup_errors off
+php_flag display_errors off
+php_flag html_errors off
+
+
