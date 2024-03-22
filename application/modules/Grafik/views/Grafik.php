@@ -11,7 +11,28 @@
 
         </div>
     </div>
-    <div class="col-12 col-md-12 mt-3">
+
+    <!-- Tabel Grafik Bar -->
+    <!-- <div class="col-12 col-md-12 mt-3">
+        <div class="table-responsive">
+            <table id="table" class="table table-striped" data-toggle="table" data-toolbar="#toolbar"
+                data-show-refresh="true" data-auto-refresh="true" data-pagination="true" data-search="true"
+                data-sort-order="desc" data-id-field="id" data-page-list="[10, 25, 50, 100, all]"
+                data-url="<?=base_url('Grafik/load_grafik2');?>">
+                <thead>
+                    <tr>
+                        <th data-field="Kabupaten" data-valign="top">Kabupaten</th>
+                        <th data-field="Jumlah_Undangan" data-valign="top">Jumlah Daftar</th>
+                        <th data-field="Tidak_Siap" data-valign="top">Belum Konfirmasi Hadir</th>
+                        <th data-field="Siap" data-valign="top">Siap Hadir</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div> -->
+
+    <!-- Tabel Grafik Pie -->
+    <!-- <div class="col-12 col-md-12 mt-3">
         <div class="table-responsive">
             <table id="table" class="table table-striped" data-toggle="table" data-toolbar="#toolbar"
                 data-show-refresh="true" data-auto-refresh="true" data-pagination="true" data-search="true"
@@ -19,14 +40,15 @@
                 data-url="<?=base_url('Grafik/load_grafik');?>">
                 <thead>
                     <tr>
-                        <th data-field="level_peserta" data-valign="top">Level Peserta</th>
-                        <th data-field="status_peserta" data-valign="top">Kehadiran</th>
-                        <th data-field="Jumlah_Data" data-valign="top">Jumlah Data</th>
+                        <th data-field="level_peserta" data-valign="top">Level Pserta</th>
+                        <th data-field="Tidak_Siap" data-valign="top">Belum Konfirmasi Hadir</th>
+                        <th data-field="Siap" data-valign="top">Siap Hadir</th>
                     </tr>
                 </thead>
             </table>
         </div>
-    </div>
+    </div> -->
+
 </div>
 
 <div class="modal fade" id="BSmodal" tabindex="-1" role="dialog" aria-labelledby="Modal FormData">
@@ -77,14 +99,12 @@
 <script src="<?= base_url(); ?>assets/dist/js/echarts-all.js"></script>
 <script type="text/javascript">
 var myChart = echarts.init(document.getElementById('bar-chart'));
-
-// specify chart configuration item and data
-option = {
+var option = {
     tooltip: {
         trigger: 'axis'
     },
     legend: {
-        data: ['Konfirmasi Kehadiran']
+        data: ['Siap Hadir', 'Belum Konfirmasi Hadir'] // Menambahkan legenda untuk kedua kategori
     },
     toolbox: {
         show: true,
@@ -101,51 +121,67 @@ option = {
             }
         }
     },
-    color: ["#55ce63"],
+    color: ["#55ce63", "#ff5722"], // Menambahkan warna untuk kedua bar
     calculable: true,
     xAxis: [{
         type: 'category',
-        data: [
-            <?php
-            $status = json_decode($Status);
-            foreach ($status as $s) {
-                echo $s == 1 ? "'Belum Konfirmasi'," : "'Siap Hadir',";
-            }
-            ?>
-        ]
+        axisLabel: {
+            interval: 0,
+            rotate: 20
+        },
+        data: JSON.parse('<?= $Kabupaten ?>')
     }],
     yAxis: [{
         type: 'value'
     }],
     series: [{
-        name: 'Total',
-        type: 'bar',
-        data: JSON.parse('<?= $Jumlah ?>'),
-        markPoint: {
-            data: [{
-                    type: 'max',
-                    name: 'Jumlah'
-                },
-                {
-                    type: 'min',
-                    name: 'Jumlah'
-                }
-            ]
+            name: 'Siap Hadir', // Mengubah nama seri menjadi 'Siap Hadir'
+            type: 'bar',
+            data: JSON.parse('<?= $Siap_Hadir ?>'), // Menggunakan data Siap Hadir
+            // markPoint: {
+            //     data: [{
+            //             type: 'max',
+            //             name: 'Jumlah'
+            //         },
+            //         {
+            //             type: 'min',
+            //             name: 'Jumlah'
+            //         }
+            //     ]
+            // },
         },
-    }]
+        {
+            name: 'Belum Konfirmasi Hadir', // Menambahkan seri baru untuk 'Tidak Siap Hadir'
+            type: 'bar',
+            data: JSON.parse('<?= $Tidak_Siap ?>'), // Menggunakan data Tidak Siap Hadir
+            // markPoint: {
+            //     data: [{
+            //             type: 'max',
+            //             name: 'Jumlah'
+            //         },
+            //         {
+            //             type: 'min',
+            //             name: 'Jumlah'
+            //         }
+            //     ]
+            // },
+        }
+    ]
 };
 
-
 // use configuration item and data specified to show chart
-myChart.setOption(option, true), $(function() {
+myChart.setOption(option, true);
+
+$(function() {
     function resize() {
         setTimeout(function() {
-            myChart.resize()
-        }, 100)
+            myChart.resize();
+        }, 100);
     }
-    $(window).on("resize", resize), $(".sidebartoggler").on("click", resize)
-});
 
+    $(window).on("resize", resize);
+    $(".sidebartoggler").on("click", resize);
+});
 
 // ============================================================== 
 // doughnut chart option
@@ -153,6 +189,7 @@ myChart.setOption(option, true), $(function() {
 var doughnutChart = echarts.init(document.getElementById('doughnut-chart'));
 
 // specify chart configuration item and data
+
 option = {
     tooltip: {
         trigger: 'item',
@@ -190,7 +227,7 @@ option = {
             }
         }
     },
-    color: ["#f62d51", "#009efb", "#55ce63"],
+    color: ["#009efb", "#f62d51", "#009efb", "#55ce63", "#ffbc34", "#2f3d4a"],
     calculable: true,
     series: [{
         name: 'Total',
@@ -210,7 +247,7 @@ option = {
                     show: true,
                     position: 'center',
                     textStyle: {
-                        fontSize: '20',
+                        fontSize: '30',
                         fontWeight: 'bold'
                     }
                 }
@@ -218,12 +255,13 @@ option = {
         },
         data: [
             <?php
-            $jumlah = json_decode($List_Jumlah);
-            $nama = json_decode($list_nama_level);
-            $label = json_decode($List_Status);
-            for ($i = 0; $i < count($jumlah); $i++) {
-                $label = $label[$i] == 1 ? 'Belum Konfirmasi' : 'Siap Hadir';
-                echo "{ value: $jumlah[$i], name: '$nama[$i]' },";
+            $Siap_Hadir1 = json_decode($Siap_Hadir1);
+            $Tidak_Siap1 = json_decode($Tidak_Siap1);
+            $list_nama_level1 = json_decode($list_nama_level);
+
+            foreach ($list_nama_level1 as $index => $nama_level) {
+                echo "{ value: ' $Siap_Hadir1[$index]' , name: '$nama_level - Siap Hadir '},\n";
+                echo "{ value: ' $Tidak_Siap1[$index]' , name: '$nama_level - Belum Konfirmasi '},\n";
             }
             ?>
         ]

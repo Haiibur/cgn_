@@ -164,6 +164,15 @@
         </li>
         <!-- End Produk Pujasangon -->
 
+        <!-- Grafik -->
+        <li>
+            <a href="<?= base_url('grafik'); ?>">
+                <i class="icon-chart"></i>
+                Info Grafik
+            </a>
+        </li>
+        <!-- End Grafik -->
+
         <!-- Pengaturan -->
         <li class="dropdown">
             <a href="#"><i class="icon-settings"></i>Pengaturan</a>
@@ -286,6 +295,15 @@
             </div>
         </li>
         <!-- End Peserta -->
+
+        <!-- Grafik -->
+        <li>
+            <a href="<?= base_url('grafik'); ?>">
+                <i class="icon-chart"></i>
+                Info Grafik
+            </a>
+        </li>
+        <!-- End Grafik -->
 
         <!-- Order Produk Pujasangon -->
         <li class="dropdown">

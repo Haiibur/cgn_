@@ -199,6 +199,22 @@
     </div>
     <!-- End Order Produk Pujasangon -->
 
+    <!-- Info Grafik -->
+    <div class="col-12 col-sm-6 col-xl-4 mt-3">
+        <a href="<?= base_url(); ?>grafik" style="text-decoration: none">
+            <div class="card">
+                <div class="card-body">
+                    <img src="<?=base_url('assets/img/icon/Projections-amico.png');?>" alt="" class="float-right"
+                        width="60" />
+                    <h6 class="card-title font-weight-bold">Info Grafik</h6>
+                    <h6 class="card-subtitle mb-2 text-muted text-danger">Data Grafik</h6>
+                    <h2></h2>
+                </div>
+            </div>
+        </a>
+    </div>
+    <!-- End Info Grafik -->
+
     <!-- Pengaturan -->
     <div class="col-12 col-sm-6 col-xl-4 mt-3">
         <a href="<?= base_url('admin'); ?>" style="text-decoration: none">
@@ -374,6 +390,22 @@
     </div>
     <!-- End Peserta -->
 
+    <!-- Info Grafik -->
+    <div class="col-12 col-sm-6 col-xl-4 mt-3">
+        <a href="<?= base_url(); ?>grafik" style="text-decoration: none">
+            <div class="card">
+                <div class="card-body">
+                    <img src="<?=base_url('assets/img/icon/Projections-amico.png');?>" alt="" class="float-right"
+                        width="60" />
+                    <h6 class="card-title font-weight-bold">Info Grafik</h6>
+                    <h6 class="card-subtitle mb-2 text-muted text-danger">Data Grafik</h6>
+                    <h2></h2>
+                </div>
+            </div>
+        </a>
+    </div>
+    <!-- End Info Grafik -->
+
     <!-- Order Produk Pujasangon -->
     <div class="col-12 col-sm-6 col-xl-4 mt-3">
         <a href="<?= base_url(); ?>Produk" style="text-decoration: none">
@@ -534,6 +566,7 @@
             </div>
         </a>
     </div>
+    <!-- End Info Grafik -->
 
     <?php }elseif ($userdata->nama_level=="Pariwisata") {?>
     <!-- Hotel -->

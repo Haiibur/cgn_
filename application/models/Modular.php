@@ -231,22 +231,21 @@
 		return $this->db->get($table)->row_array()[$field];
 	}
 
-  function Grafik1()
+  function Grafik_list()
   {
-    $query = "SELECT kd_daftar, status_peserta, COUNT(status_peserta) jmlhdata
-    FROM t_pendaftaran tpn
-    GROUP BY status_peserta";
+    $query = "SELECT tpl.nama_level_peserta, tpl.warna_level, SUM(CASE WHEN tpn.status_peserta = 1 THEN 1 ELSE 0 END) AS Tidak_Siap, SUM(CASE WHEN tpn.status_peserta = 2 THEN 1 ELSE 0 END) AS Siap 
+    FROM t_peserta_level tpl 
+    LEFT JOIN t_pendaftaran tpn ON tpl.kd_level_peserta = tpn.level_peserta 
+    GROUP BY tpl.nama_level_peserta, tpl.warna_level";
     return $this->db->query($query);
   }
 
-  function Grafik_list()
+  function Grafik_list2()
   {
-    $query = "SELECT t_pendaftaran.kd_daftar,t_pendaftaran.tgl_konfirmasi_hadir, t_peserta_level.*, t_pendaftaran.status_peserta, COUNT(t_pendaftaran.status_peserta) jmlhdata 
-    FROM t_pendaftaran 
-    INNER JOIN t_provinsi ON t_provinsi.kd_provinsi= t_pendaftaran.prov_kd 
-    INNER JOIN t_prov_kab ON t_prov_kab.kd_kab= t_pendaftaran.kab_kd 
-    INNER JOIN t_peserta_level ON t_peserta_level.kd_level_peserta=t_pendaftaran.level_peserta
-    GROUP BY t_peserta_level.nama_level_peserta, t_pendaftaran.status_peserta";
+    $query = "SELECT tpk.nama_kab, COUNT(tpn.kd_daftar) Jumlah_Daftar, SUM(CASE WHEN tpn.status_peserta = 1 THEN 1 ELSE 0 END) AS Tidak_Siap, SUM(CASE WHEN tpn.status_peserta = 2 THEN 1 ELSE 0 END) AS Siap 
+    FROM t_prov_kab tpk 
+    INNER JOIN t_pendaftaran tpn ON tpn.kab_kd = tpk.kd_kab 
+    GROUP BY tpk.nama_kab";
     return $this->db->query($query);
   }
 } 

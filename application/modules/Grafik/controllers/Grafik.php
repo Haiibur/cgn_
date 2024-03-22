@@ -18,33 +18,37 @@ class Grafik extends CI_Controller {
         $data['judul'] 		= 'Info Grafik';
         $data['linkpage'] 	= '';
 
-		$res = $this->Modular->Grafik1()->result();
-		
-		$status_peserta = array();
-		$JumlahData = array();
-	
-		foreach ($res as $key => $value) {
-			$status_peserta[] = $value->status_peserta;
-			$JumlahData[] = $value->jmlhdata;
-		}
-
-		$reslist = $this->Modular->Grafik_list()->result();
-		
-		$list_nama_level = array();
-		$list_status_peserta = array();
-		$list_JumlahData = array();
-
+		// Grafik 1
+		$reslist = $this->Modular->Grafik_list2()->result();
+		$list_Kabupaten			 = array();
+		$list_Siap 				 = array();
+		$list_Tidak_Siap_Hadir 	 = array();
 		foreach ($reslist as $key => $value) {
-			$list_nama_level[] = $value->nama_level_peserta;
-			$list_status_peserta[] = $value->status_peserta;
-			$list_JumlahData[] = $value->jmlhdata;
+			$list_Kabupaten[] = $value->nama_kab;
+			$list_Siap_Hadir[] = $value->Siap;
+			$list_Tidak_Siap_Hadir[] = $value->Tidak_Siap;
 		}
 
-		$data['Status'] = json_encode($status_peserta);
-		$data['Jumlah'] = json_encode($JumlahData);
-		$data['list_nama_level'] = json_encode($list_nama_level);		
-		$data['List_Status'] = json_encode($list_status_peserta);
-		$data['List_Jumlah'] = json_encode($list_JumlahData);
+		// Grafik 2
+		$reslist1 = $this->Modular->Grafik_list()->result();
+		$list_nama_level1 = array();
+		$list_Siap1 = array();
+		$list_Tidak_Siap_Hadir1 = array();
+		foreach ($reslist1 as $key => $value) {
+			$list_nama_level1[] = $value->nama_level_peserta;
+			$list_Siap_Hadir1[] = $value->Siap;
+			$list_Tidak_Siap_Hadir1[] = $value->Tidak_Siap;
+		}
+
+		// Grafik 1
+		$data['Kabupaten'] 	= json_encode($list_Kabupaten);
+		$data['Siap_Hadir'] = json_encode($list_Siap_Hadir);
+		$data['Tidak_Siap'] = json_encode($list_Tidak_Siap_Hadir);
+
+		// Grafik 2
+		$data['list_nama_level'] 	= json_encode($list_nama_level1);
+		$data['Siap_Hadir1'] = json_encode($list_Siap_Hadir1);
+		$data['Tidak_Siap1'] = json_encode($list_Tidak_Siap_Hadir1);
 		
 		$this->template->load('home', 'Grafik' ,$data);	
 	}
@@ -55,23 +59,34 @@ class Grafik extends CI_Controller {
 		$output = array();
 		
 		foreach ($res as $key => $value) {
-			$iddata = $value->kd_daftar.'=t_pendaftaran=kd_daftar=Pendaftaran=0.jpg';
 
 			$level='<span class="badge text-bg-secondary text-white" style="background-color:#'.$value->warna_level.'">'.$value->nama_level_peserta.'</span>';
-			if($value->tgl_konfirmasi_hadir !=""){
-				$hadirr='<span class="badge text-bg-success">Siap Hadir</span>';
-				
-			}else{
-				$hadirr='<span class="badge text-bg-secondary text-danger">Belum Konfirmasi</span>';
-			}
+
 			$data = [
-				'id' 				 => $value->kd_daftar,
-				'ids'				 => $iddata,
-				'kd_daftar'			 => $value->kd_daftar,
 				'level_peserta'	 	 => $level,
-				'Jumlah_Data'		 => $value->jmlhdata,
-				'status_peserta'	 => $hadirr,
+				'Siap'				 => $value->Siap,
+				'Tidak_Siap'	 	 => $value->Tidak_Siap,
 			];
+
+			array_push($output, $data);
+		}
+		
+		$this->output->set_content_type('application/json')->set_output(json_encode($output));
+	}
+
+	function load_grafik2()
+	{
+		$res = $this->Modular->Grafik_list2()->result();
+		$output = array();
+		
+		foreach ($res as $key => $value) {			
+			$data = [
+				'Kabupaten'	 	 	 => $value->nama_kab,
+				'Jumlah_Undangan'	 => $value->Jumlah_Undangan,
+				'Siap'				 => $value->Siap,
+				'Tidak_Siap'		 => $value->Tidak_Siap,
+			];
+
 			array_push($output, $data);
 		}
 		
